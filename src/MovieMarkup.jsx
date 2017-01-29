@@ -36,7 +36,7 @@ const MovieMarkup = ({title, overview, genres_ids, vote_average, poster_path, re
 			>
 				<Modal.Header>{title}</Modal.Header>
 				<Modal.Content>
-					<Image src={`https://image.tmdb.org/t/p/w500/${poster_path}`} size="medium" floated="left"/>
+					<Image src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={`${title}'s poster`}size="medium" floated="left"/>
 					<Rating disabled defaultRating={vote_average} maxRating={10}/>
 					<Label.Group size="medium">
 						{genres_ids.map((c,i) => <Label key={i}>{genres[genres.map(e => e.id).indexOf(c)].name}</Label>)}

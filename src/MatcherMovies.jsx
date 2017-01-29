@@ -9,8 +9,8 @@ const styles = {
 
 export default class MatcherMovie extends Component {
 	render(){
-		const { noResults, responseData, nextPage } = this.props
-		const mapped = responseData.results.map((c,i) => 
+		const { total_results, movies } = this.props
+		const mapped = movies.map((c,i) => 
 			<Grid.Column key={i}>
 				<MovieMarkup 
 					title={c.title}
@@ -35,10 +35,9 @@ export default class MatcherMovie extends Component {
 							fluid={true}
 							color="orange"
 							size="medium"
-							onClick={nextPage}
 						><Icon name="search"/>Load more</Button>
 						: 
-							noResults
+							(total_results === 0)
 							?	<Message 
 								icon="warning sign"
 								header="Try again"

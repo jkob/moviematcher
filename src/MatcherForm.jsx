@@ -49,12 +49,23 @@ const release_year = [
 	{ key: "2000", text: "2000", value: "2000"}
 ]
 
+const votecount = [
+	{ key: "5", text: "5", value: "5"},
+	{ key: "10", text: "10", value: "10"},
+	{ key: "20", text: "20", value: "20"},
+	{ key: "50", text: "50", value: "50"},
+	{ key: "100", text: "100", value: "100"},
+	{ key: "200", text: "200", value: "200"}
+]
+
 export default class MatcherForm extends Component {
 	state = {
 		formError: true,
 		wantRatings: false,
 		wantReleaseYear: false,
+		wantVoteCountLimit: false,
 		ratingValue: 0,
+		voteCount: 0
 	}
 	toggleRatings = () => this.setState({wantRatings: !this.state.wantRatings})
 	handleCategoryChange = (e, { value }) => {
@@ -62,10 +73,12 @@ export default class MatcherForm extends Component {
 		?	this.setState({formError: false})
 		:   this.setState({formError: true})
 	} 
-	setRating = (e, { value }) => { this.setState({ ratingValue: value })}
+	setRating = (e, { value }) => this.setState({ ratingValue: value })
+	setVoteCount = (e, { value }) => this.setState({voteCount: value })
 	toggleReleaseYear = () => this.setState({wantReleaseYear: !this.state.wantReleaseYear})
+	toggleVoteCountLimit = () => this.setState({wantVoteCountLimit: !this.state.wantVoteCountLimit})
 	render(){
-		const { formError, wantRatings, wantReleaseYear } = this.state
+		const { formError, wantRatings, wantReleaseYear, wantVoteCountLimit } = this.state
 		const { onSubmit, loading } = this.props
 		return (
 			<Form
@@ -115,6 +128,26 @@ export default class MatcherForm extends Component {
 						name="Rating"
 						placeholder="Rating..."
 						onChange={this.setRating}
+					/>
+					: null
+				}
+			</Form.Group>
+			<Form.Group inline widths="equal">
+				<Form.Field>
+					<Checkbox toggle
+						label="I want to limit by votes"
+						name="enableVoteCountLimit"
+						value="enableVoteCountLimit"
+						onChange={this.toggleVoteCountLimit}
+					/>
+				</Form.Field>
+				{	wantVoteCountLimit
+					? <Form.Select inline
+						label="VoteCount:"
+						options={votecount}
+						name="Vote_Count"
+						placeholder="Votecount..."
+						onChange={this.setVoteCount}
 					/>
 					: null
 				}

@@ -12,20 +12,14 @@ import key from "../config.js"
 
 export default class Matcher extends Component {
 	state = {
-		responseData: {
-			page: "",
-			results: [],
-			total_pages: "",
-			total_results: ""
-		},
-		lastSearched: "",
-		noResults: false,
-		page: 0,
-		loading: false
+		loading: false,
+		movies: [],
+		total_results: null,
+		page: null,
 	}
-	onFormSubmit = (e, { formData }) => {
+	handleFormSubmit = (e, { formData}) => {
 		e.preventDefault()
-
+		console.log(formData)
 		let genreString = "&with_genres="
 		if(formData.Categories.length >= 1){
 			genreString += formData.Categories[0]
@@ -43,66 +37,51 @@ export default class Matcher extends Component {
 			releaseDate += `&release_date.gte=${formData.ReleaseYear}`
 		}
 
-		const completeURL = `${API_URL}?api_key=${key}&language=en-US&sort_by=popularity.desc&include_adult=true${genreString}${ratingsString}${releaseDate}`
+		let voteCount = (formData.enableVoteCountLimit === "enableVoteCountLimit") 
+			? `&vote_count.gte=${formData.Vote_Count}`
+			: ""
+		const completeURL = `${API_URL}?api_key=${key}&language=en-US&sort_by=popularity.desc&include_adult=true${genreString}${ratingsString}${releaseDate}${voteCount}`
 		this.fetch(completeURL)
-		this.setState({lastSearched: completeURL})
-	}
-	nextPage = () => {
-		const { lastSearched, page } = this.state
-		let newString = ""
-		if(lastSearched.includes("&page=")){
-			if(page < 10){
-				newString = lastSearched.slice(lastSearched.length - 7)
-			} else if(page < 100){
-				newString = lastSearched.slice(lastSearched.length - 8)
-			}
-			newString += `&page=${page + 1}`
-			this.fetch(newString)
-			this.setState({page})
-		} else {
-			newString += `&page=${page + 1}`
-			this.fetch(newString)
-			this.setState({page: page + 1})
-		}
 	}
 	fetch = (url) => {
-		console.log(url)
+		console.log("Fetching url=", url)
 		this.setState({loading: true})
 		axios.get(url)
-		.then(data => {
-			if(data.data.results === 0){
+			.then(res => {
+				console.log("got data=", res)
 				this.setState({
-					responseData: data.data,
-					noResults: true,
-					lastSearched: url,
-					loading: false
+					loading: false,
+					movies: res.data.results,
+					total_results: res.data.total_results,
+					page: res.data.page
 				})
-			} else {
+			})
+			.catch(err => {
 				this.setState({
-					responseData: data.data,
-					noResults: false,
-					lastSearched: url,
-					loading: false
+					loading: false,
+					movies: [],
+					total_results: 0,
+					page: null
 				})
-			}
-		})
+				console.log("Error occured=", err)
+			})
 	}
+
 	render(){
 		console.log("state=", this.state)
-		const { noResults, responseData, loading } = this.state
+		const { total_results, movies, loading } = this.state
 		return (
 			<section>
 				<Navbar/>
 				<Divider hidden/>
 				 <MatcherForm
 				 	loading={loading}
-					onSubmit={this.onFormSubmit}
+					onSubmit={this.handleFormSubmit}
 				/> 
 				<Divider />
 				<MatcherMovies
-					noResults={noResults}
-					responseData={responseData}
-					nextPage={this.nextPage}
+					total_results={total_results}
+					movies={movies}
 				/>
 				<Divider hidden/>
 				<Divider hidden/>
