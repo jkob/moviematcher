@@ -16,8 +16,11 @@ Tools used:
 ## How to use:
 
 `git clone https://github.com/JakobLofgren/moviematcher && cd moviematcher`
+
 `npm i`
+
 create config.js at root level (moviematcher/) with your MovieDB API key.
+
 `npm start`
 
 ## No Redux/MobX in 2017???
