@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react"
-import { Card, Icon, Image, Item, Button, Grid, Message, Modal, Segment, Divider, Loader, Rating, } from "semantic-ui-react"
+import { Header, Icon, Button, Grid, Message, Divider } from "semantic-ui-react"
 import MovieMarkup from "./MovieMarkup.jsx"
 const styles = {
 	grid: {
@@ -9,13 +9,14 @@ const styles = {
 
 export default class MatcherMovie extends Component {
 	render(){
-		const { total_results, movies } = this.props
+		const { total_results, movies, nextPage, page } = this.props
 		const mapped = movies.map((c,i) => 
 			<Grid.Column key={i}>
 				<MovieMarkup 
 					title={c.title}
 					overview={c.overview}
 					vote_average={c.vote_average}
+					vote_count={c.vote_count}
 					poster_path={c.poster_path}
 					genres_ids={c.genre_ids}
 					release_date={c.release_date}
@@ -24,6 +25,10 @@ export default class MatcherMovie extends Component {
 		)
 		return (
 			<section>
+				{	page >= 1
+					?	<Header as="h2" textAlign="center">Current page: {page}.</Header>
+					: null
+				}
 				<Grid columns={3} style={styles.grid} stackable>
 					{mapped}
 				</Grid>
@@ -35,7 +40,8 @@ export default class MatcherMovie extends Component {
 							fluid={true}
 							color="orange"
 							size="medium"
-						><Icon name="search"/>Load more</Button>
+							onClick={nextPage}
+						><Icon name="search"/>Go to page: {page + 1}.</Button>
 						: 
 							(total_results === 0)
 							?	<Message 
@@ -49,8 +55,13 @@ export default class MatcherMovie extends Component {
 			</section>
 		)
 	}
+	componentDidUpdate(){
+		window.scrollTo(0, 0)
+	}
 }
 
-MatcherMovie.PropTypes = {
-	responseData: React.PropTypes.object
+MatcherMovie.propTypes = {
+	movies: PropTypes.array.isRequired,
+	nextPage: PropTypes.func.isRequired,
+	page: PropTypes.number.isRequired
 }

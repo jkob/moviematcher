@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, Label, Divider, Icon, Image, Item, Button, Grid, Message, Modal, Rating, Segment } from "semantic-ui-react"
+import { Card, Label, Divider, Icon, Image,  Button, Modal, Rating, Statistic } from "semantic-ui-react"
 
 const genres =	[
 	{ "id": 28, "name": "Action" },
@@ -23,7 +23,7 @@ const genres =	[
 	{ "id": 37, "name": "Western" }
 ]
 
-const MovieMarkup = ({title, overview, genres_ids, vote_average, poster_path, release_date}) => (
+const MovieMarkup = ({title, overview, genres_ids, vote_average, vote_count, poster_path, release_date}) => (
 	<Card>
 		<Card.Content>
 			<Card.Header>{title}</Card.Header>
@@ -38,6 +38,7 @@ const MovieMarkup = ({title, overview, genres_ids, vote_average, poster_path, re
 				<Modal.Content>
 					<Image src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={`${title}'s poster`}size="medium" floated="left"/>
 					<Rating disabled defaultRating={vote_average} maxRating={10}/>
+					<Statistic size="tiny" floated="right" label="Votes" value={vote_count}/>
 					<Label.Group size="medium">
 						{genres_ids.map((c,i) => <Label key={i}>{genres[genres.map(e => e.id).indexOf(c)].name}</Label>)}
 					</Label.Group>
@@ -65,16 +66,5 @@ const MovieMarkup = ({title, overview, genres_ids, vote_average, poster_path, re
 		</Card.Content>
 	</Card>
 )
-
-
-/*
-<Message icon>
-						<Icon name="tv"/>
-						<Message.Content>
-							<Message.Header>Try streaming online</Message.Header>
-							Try using <a href={`https://fmovies.se/search?keyword=${title.split(" ").join("+")}`}>Fmovies.se</a> to stream this movie.
-						</Message.Content>
-					</Message>
-*/
 
 export default MovieMarkup

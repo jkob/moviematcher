@@ -170,23 +170,6 @@ export default class MatcherForm extends Component {
 }
 
 MatcherForm.propTypes = {
-	onSubmit: React.PropTypes.func,
+	onSubmit: React.PropTypes.func.isRequired,
+	loading: React.PropTypes.bool.isRequired
 }
-
-
-
-
-
-
-
-
-
-/*
-
-Form options: Categories, greater than X, How many movies you want.
-User selects categories, greater than rating, year of release etc...
-Data gets sent from form to parent.
-Parent fetches movies with right criteria and displays them
-Pairs the movies up 2 by 2 until 1 remains
-
-*/
