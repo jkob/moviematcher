@@ -52,9 +52,9 @@ export default class Matcher extends Component {
 		let newString = ""
 		if(lastSearched.includes("&page=")){
 			if(page < 10){
-				newString = lastSearched.slice(-7)
+				newString = lastSearched.slice(lastSearched.length - 7)
 			} else if(page < 100){
-				newString = lastSearched.slice(-8)
+				newString = lastSearched.slice(lastSearched.length - 8)
 			}
 			newString += `&page=${page + 1}`
 			this.fetch(newString)
