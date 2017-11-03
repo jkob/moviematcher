@@ -9,7 +9,6 @@ import MatcherMovies from "./MatcherMovies.jsx"
 const API_URL = "https://api.themoviedb.org/3/discover/movie"
 import key from "../config.js"
 
-
 const styles = {
 	footer: {
 		textAlign: "center"
@@ -104,7 +103,7 @@ export default class Matcher extends Component {
 					page={page}
 				/>
 				<Divider hidden/>
-				<p style={styles.footer}>Made by <a href="https://github.com/JakobLofgren">JakobLofgren</a> 2017</p>
+				<p style={styles.footer}>Made by <a href="https://github.com/jkob">jkob</a> 2017</p>
 			</section>
 		)
 	}
