@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from "react"
 import { Header, Icon, Button, Grid, Message, Divider } from "semantic-ui-react"
+
 import MovieMarkup from "./MovieMarkup.jsx"
+
 const styles = {
 	grid: {
 		margin: "0 30px"
