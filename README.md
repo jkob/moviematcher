@@ -1,30 +1,36 @@
 # MovieMatcher
 
+MovieMatcher is a tool to find movies to watch. It has good tools to filter out what you want to watch and gives you convenient links to decide if the movie is worth watching.
+
 Tools used: 
 
-[Create-react-app](https://github.com/facebookincubator/create-react-app)
+* ### [Create-react-app](https://github.com/facebookincubator/create-react-app)
 
-[React](https://facebook.github.io/react/)
+* ### [React](https://facebook.github.io/react/)
 
-[React-Router](https://github.com/ReactTraining/react-router)
+* ### [React-Router](https://github.com/ReactTraining/react-router)
 
-[Semantic-UI-React](react.semantic-ui.com)
+* ### [Semantic-UI-React](react.semantic-ui.com)
 
-[TheMovieDB](https://www.themoviedb.org/)
+* ### [TheMovieDB](https://www.themoviedb.org/)
 
 
 ## How to use:
 
-`git clone https://github.com/JakobLofgren/moviematcher && cd moviematcher`
+Clone the repo
+
+`git clone https://github.com/jkob/moviematcher && cd moviematcher`
+
+Install dependencies
 
 `npm i`
 
-create config.js at root level (moviematcher/) with your MovieDB API key.
+Take a look at `config.example.js` on how to get & set the API key
 
 `npm start`
 
-## No Redux/MobX in 2017???
+## No Redux/MobX/(Insert state-lib here) in 2017? 
 
-Yup. I wanted to see how things would be without it. 
+Yup, too small of an app to utilize it.
 
 
